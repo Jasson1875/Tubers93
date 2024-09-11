@@ -1,7 +1,6 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 local Window = OrionLib:MakeWindow({Name = "Tubers93 | Brookhaven RP | Executor: Solara", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
-
 -- Credits
 local Tab = Window:MakeTab({
     Name = "Information",
@@ -727,7 +726,7 @@ Tab:AddButton({
         loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
     end    
 })
-Tab:AddParagraph("imformation","All Commands >>>")
+Tab:AddParagraph("information","All Commands >>>")
 
 
 
