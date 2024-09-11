@@ -11,7 +11,7 @@ local Tab = Window:MakeTab({
 Tab:AddLabel("Thanks you for using my Scripts! The Owner is Jasson1875")
 Tab:AddLabel("His Tiktok is deakerk18")
 
-Tab:AddLabel("Update Version | V1.00")
+Tab:AddLabel("Update Version | V1.01")
 Tab:AddTextbox({
 	Name = "Discord",
 	Default = "https://discord.gg/tmJ7fqc8j4",
@@ -678,7 +678,6 @@ local Section = Tab:AddSection({
 })
 
 
--- TAB NUMMER SECHS (ANFANG)
 local Tab = Window:MakeTab({
 	Name = "Pet Simulator X",
 	Icon = "rbxassetid://4483345998",
@@ -712,3 +711,22 @@ local Section = Tab:AddSection({
 local Section = Tab:AddSection({
     Name = "coming coon"
 })
+
+
+-- TAB NUMMER SECHS (ANFANG)
+local Tab = Window:MakeTab({
+	Name = "Others",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Tab:AddButton({
+    Name = "Activate Infinite Yield",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+    end    
+})
+Tab:AddParagraph("imformation","All Commands >>>")
+
+
+
