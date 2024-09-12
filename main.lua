@@ -169,6 +169,9 @@ Tab:AddButton({
 local Section = Tab:AddSection({
     Name = "ESP"
 })
+local Section = Tab:AddSection({
+    Name = "coming coon"
+})
 
 -- TAB NUMMER ZWEI (ANFANG)
 local Players = game:GetService("Players")
