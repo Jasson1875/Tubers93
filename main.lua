@@ -1,5 +1,5 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
-local Window = OrionLib:MakeWindow({Name = "Tubers93 | Brookhaven RP | Executor: Solara", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+local Window = OrionLib:MakeWindow({Name = "Tubers93 Hub | Brookhaven RP | Executor: Solara", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
 
 -- Credits
 local Tab = Window:MakeTab({
@@ -10,8 +10,9 @@ local Tab = Window:MakeTab({
 
 Tab:AddLabel("Thanks you for using my Scripts! The Owner is Jasson1875")
 Tab:AddLabel("His Tiktok is deakerk18")
+Tab:AddLabel("Designer: Noobie22152")
 
-Tab:AddLabel("Update Version | V1.02")
+Tab:AddLabel("Update Version | V1.03")
 Tab:AddTextbox({
 	Name = "Discord",
 	Default = "https://discord.gg/tmJ7fqc8j4",
