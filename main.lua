@@ -8,19 +8,20 @@ local Tab = Window:MakeTab({
     PremiumOnly = false
 })
 
-Tab:AddLabel("Thanks you for using my Scripts! The Owner is Jasson1875")
-Tab:AddLabel("His Tiktok is deakerk18")
-Tab:AddLabel("Designer: Noobie22152")
 
-Tab:AddLabel("Update Version | V1.03")
-Tab:AddTextbox({
-	Name = "Discord",
-	Default = "https://discord.gg/tmJ7fqc8j4",
-	TextDisappear = true,
-	Callback = function(Value)
-		print(Value)
-	end	  
+Tab:AddLabel("Thanks for using my Scripts!")
+Tab:AddLabel("V1.05")
+
+local Section = Tab:AddSection({
+    Name = "Owner"
 })
+Tab:AddLabel("The Owner and creator is Jasson1875")
+Tab:AddLabel("His Tiktok is: deakerk18")
+
+local Section = Tab:AddSection({
+    Name = "Designer"
+})
+Tab:AddLabel("The Designer is Noobie22152")
 
 -- TAB NUMMER EINS (ANFANG)
 local Tab = Window:MakeTab({
@@ -166,14 +167,117 @@ Tab:AddButton({
         end
     end
 })
+ 
+-- ESP Script (ANFANG)
 
 local Section = Tab:AddSection({
     Name = "ESP"
 })
-local Section = Tab:AddSection({
-    Name = "coming coon"
+
+local ESPEnabled = false
+local FillTransparency = 0.5
+
+local function EnableESP()
+    local FillColor = Color3.fromRGB(175, 25, 255)
+    local DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+    local OutlineColor = Color3.fromRGB(255, 255, 255)
+    local OutlineTransparency = 0
+
+    local CoreGui = game:GetService("CoreGui")
+    local Players = game:GetService("Players")
+    local connections = {}
+
+    local Storage = Instance.new("Folder")
+    Storage.Parent = CoreGui
+    Storage.Name = "Highlight_Storage"
+
+    local function Highlight(plr)
+        local Highlight = Instance.new("Highlight")
+        Highlight.Name = plr.Name
+        Highlight.FillColor = FillColor
+        Highlight.DepthMode = DepthMode
+        Highlight.FillTransparency = FillTransparency
+        Highlight.OutlineColor = OutlineColor
+        Highlight.OutlineTransparency = OutlineTransparency
+        Highlight.Parent = Storage
+
+        local plrchar = plr.Character
+        if plrchar then
+            Highlight.Adornee = plrchar
+        end
+
+        connections[plr] = plr.CharacterAdded:Connect(function(char)
+            Highlight.Adornee = char
+        end)
+    end
+
+    Players.PlayerAdded:Connect(Highlight)
+    for i, v in next, Players:GetPlayers() do
+        Highlight(v)
+    end
+
+    Players.PlayerRemoving:Connect(function(plr)
+        local plrname = plr.Name
+        if Storage:FindFirstChild(plrname) then
+            Storage[plrname]:Destroy()
+        end
+        if connections[plr] then
+            connections[plr]:Disconnect()
+        end
+    end)
+end
+
+local function DisableESP()
+    local CoreGui = game:GetService("CoreGui")
+    local Storage = CoreGui:FindFirstChild("Highlight_Storage")
+    if Storage then
+        Storage:Destroy()
+    end
+    ESPEnabled = false
+end
+
+
+Tab:AddButton({
+    Name = "Enable ESP",
+    Callback = function()
+        if not ESPEnabled then
+            EnableESP()
+            ESPEnabled = true
+        end
+    end
 })
 
+Tab:AddSlider({
+    Name = "Fill Transparency",
+    Min = 0,
+    Max = 1,
+    Default = 0.5,
+    Color = Color3.fromRGB(175, 25, 255),
+    Increment = 0.05,
+    Callback = function(value)
+        FillTransparency = value
+        if ESPEnabled then
+            local CoreGui = game:GetService("CoreGui")
+            local Storage = CoreGui:FindFirstChild("Highlight_Storage")
+            if Storage then
+                for _, highlight in pairs(Storage:GetChildren()) do
+                    if highlight:IsA("Highlight") then
+                        highlight.FillTransparency = FillTransparency
+                    end
+                end
+            end
+        end
+    end
+})
+
+Tab:AddButton({
+    Name = "Disable ESP",
+    Callback = function()
+        if ESPEnabled then
+            DisableESP()
+        end
+    end
+})
 -- TAB NUMMER ZWEI (ANFANG)
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
@@ -330,7 +434,7 @@ Tab:AddButton({
                 [5] = 1,
                 [6] = 134082579
             },
-            [3] = "by:REDz"
+            [3] = "by Jasson1875"
         }
         game:GetService("ReplicatedStorage").RE:FindFirstChild("1Avata1rOrigina1l"):FireServer(unpack(args))
     end
@@ -477,278 +581,68 @@ local Section = Tab:AddSection({
 
 -- TAB NUMMER FÜNF (ANFANG)
 local Tab = Window:MakeTab({
-	Name = "Executor's",
-	Icon = "rbxassetid://4483345998",
-	PremiumOnly = false
-})
-
-local Section = Tab:AddSection({
-	Name = "Executor's"
-})
- 
-Tab:AddButton({ 	Name  = "Arceus x", 	Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/AZYsGithub/chillz-workshop/main/Arceus%20X%20V3"))()
-end })
- 
-Tab:AddButton({ 	Name  = "Synapse X", 	Callback = function()
-loadstring(game:HttpGet("https://pastebin.com/raw/qhu8B3sx"))()
-end })
- 
-Tab:AddButton({ 	Name  = "Vega X", 	Callback = function()
-loadstring(game:HttpGet("https://raw.githubusercontent.com/NathTheDev/Project/main/Vega%20X.lua"))()
-end })
-
-local Section = Tab:AddSection({
-    Name = "coming coon"
-})
-
-local Section = Tab:AddSection({
-    Name = "coming coon"
-})
-
-local Section = Tab:AddSection({
-    Name = "coming coon"
-})
-
--- TAB NUMMER SECHS (ANFANG)
-local Tab = Window:MakeTab({
-    Name = "FlingGUIs",
+    Name = "Teleport",
     Icon = "rbxassetid://4483345998",
     PremiumOnly = false
 })
 
-Tab:AddButton({
-    Name = "SkidFling",
-    Callback = function()
-        local Targets = {"All"}
-        local Players = game:GetService("Players")
-        local Player = Players.LocalPlayer
-        local AllBool = false
-
-        local GetPlayer = function(Name)
-            Name = Name:lower()
-            if Name == "all" or Name == "others" then
-                AllBool = true
-                return
-            elseif Name == "random" then
-                local GetPlayers = Players:GetPlayers()
-                if table.find(GetPlayers, Player) then table.remove(GetPlayers, table.find(GetPlayers, Player)) end
-                return GetPlayers[math.random(#GetPlayers)]
-            elseif Name ~= "random" and Name ~= "all" and Name ~= "others" then
-                for _, x in next, Players:GetPlayers() do
-                    if x ~= Player then
-                        if x.Name:lower():match("^" .. Name) then
-                            return x
-                        elseif x.DisplayName:lower():match("^" .. Name) then
-                            return x
-                        end
-                    end
+local function addButton(tab, name, position)
+    tab:AddButton({
+        Name = name,
+        Callback = function()
+            local Players = game:GetService("Players")
+            local localPlayer = Players.LocalPlayer
+            local camera = game.Workspace.CurrentCamera
+            
+            local function teleportLocalPlayer()
+                if localPlayer.Character and localPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                    local originalCameraCFrame = camera.CFrame
+                    localPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(position)
+                    camera.CFrame = originalCameraCFrame
                 end
-            else
-                return
             end
+
+            teleportLocalPlayer()
         end
+    })
+end
 
-        local Message = function(_Title, _Text, Time)
-            game:GetService("StarterGui"):SetCore("SendNotification", {Title = _Title, Text = _Text, Duration = Time})
-        end
-
-        local SkidFling = function(TargetPlayer)
-            local Character = Player.Character
-            local Humanoid = Character and Character:FindFirstChildOfClass("Humanoid")
-            local RootPart = Humanoid and Humanoid.RootPart
-
-            local TCharacter = TargetPlayer.Character
-            local THumanoid
-            local TRootPart
-            local THead
-            local Accessory
-            local Handle
-
-            if TCharacter:FindFirstChildOfClass("Humanoid") then
-                THumanoid = TCharacter:FindFirstChildOfClass("Humanoid")
-            end
-            if THumanoid and THumanoid.RootPart then
-                TRootPart = THumanoid.RootPart
-            end
-            if TCharacter:FindFirstChild("Head") then
-                THead = TCharacter.Head
-            end
-            if TCharacter:FindFirstChildOfClass("Accessory") then
-                Accessory = TCharacter:FindFirstChildOfClass("Accessory")
-            end
-            if Accessory and Accessory:FindFirstChild("Handle") then
-                Handle = Accessory.Handle
-            end
-
-            if Character and Humanoid and RootPart then
-                if RootPart.Velocity.Magnitude < 50 then
-                    getgenv().OldPos = RootPart.CFrame
-                end
-                if THumanoid and THumanoid.Sit and not AllBool then
-                    return Message("Error Occurred", "Targeting is sitting", 5)
-                end
-                if THead then
-                    workspace.CurrentCamera.CameraSubject = THead
-                elseif not THead and Handle then
-                    workspace.CurrentCamera.CameraSubject = Handle
-                elseif THumanoid and TRootPart then
-                    workspace.CurrentCamera.CameraSubject = THumanoid
-                end
-                if not TCharacter:FindFirstChildWhichIsA("BasePart") then
-                    return
-                end
-
-                local FPos = function(BasePart, Pos, Ang)
-                    RootPart.CFrame = CFrame.new(BasePart.Position) * Pos * Ang
-                    Character:SetPrimaryPartCFrame(CFrame.new(BasePart.Position) * Pos * Ang)
-                    RootPart.Velocity = Vector3.new(9e7, 9e7 * 10, 9e7)
-                    RootPart.RotVelocity = Vector3.new(9e8, 9e8, 9e8)
-                end
-
-                local SFBasePart = function(BasePart)
-                    local TimeToWait = 2
-                    local Time = tick()
-                    local Angle = 0
-
-                    repeat
-                        if RootPart and THumanoid then
-                            if BasePart.Velocity.Magnitude < 50 then
-                                Angle = Angle + 100
-
-                                FPos(BasePart, CFrame.new(0, 1.5, 0) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, 0) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(2.25, 1.5, -2.25) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(-2.25, -1.5, 2.25) + THumanoid.MoveDirection * BasePart.Velocity.Magnitude / 1.25, CFrame.Angles(math.rad(Angle), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, 1.5, 0) + THumanoid.MoveDirection, CFrame.Angles(math.rad(Angle), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, 0) + THumanoid.MoveDirection, CFrame.Angles(math.rad(Angle), 0, 0))
-                                task.wait()
-                            else
-                                FPos(BasePart, CFrame.new(0, 1.5, THumanoid.WalkSpeed), CFrame.Angles(math.rad(90), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, -THumanoid.WalkSpeed), CFrame.Angles(0, 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, 1.5, THumanoid.WalkSpeed), CFrame.Angles(math.rad(90), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, 1.5, TRootPart.Velocity.Magnitude / 1.25), CFrame.Angles(math.rad(90), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, -TRootPart.Velocity.Magnitude / 1.25), CFrame.Angles(0, 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, 1.5, TRootPart.Velocity.Magnitude / 1.25), CFrame.Angles(math.rad(90), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(90), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(math.rad(-90), 0, 0))
-                                task.wait()
-
-                                FPos(BasePart, CFrame.new(0, -1.5, 0), CFrame.Angles(0, 0, 0))
-                                task.wait()
-                            end
-                        else
-                            break
-                        end
-                    until BasePart.Velocity.Magnitude > 500 or BasePart.Parent ~= TargetPlayer.Character or TargetPlayer.Parent ~= Players or not TargetPlayer.Character == TCharacter or THumanoid.Sit or Humanoid.Health <= 0 or tick() > Time + TimeToWait
-                end
-
-                workspace.FallenPartsDestroyHeight = 0/0
-
-                local BV = Instance.new("BodyVelocity")
-                BV.Name = "EpixVel"
-                BV.Parent = RootPart
-                BV.Velocity = Vector3.new(9e8, 9e8, 9e8)
-                BV.MaxForce = Vector3.new(1/0, 1/0, 1/0)
-
-                Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, false)
-
-                if TRootPart and THead then
-                    if (TRootPart.CFrame.p - THead.CFrame.p).Magnitude > 5 then
-                        SFBasePart(THead)
-                    else
-                        SFBasePart(TRootPart)
-                    end
-                elseif TRootPart and not THead then
-                    SFBasePart(TRootPart)
-                elseif not TRootPart and THead then
-                    SFBasePart(THead)
-                elseif not TRootPart and not THead and Accessory and Handle then
-                    SFBasePart(Handle)
-                else
-                    return Message("Error Occurred", "Target is missing everything", 5)
-                end
-
-                BV:Destroy()
-                Humanoid:SetStateEnabled(Enum.HumanoidStateType.Seated, true)
-                workspace.CurrentCamera.CameraSubject = Humanoid
-
-                repeat
-                    RootPart.CFrame = getgenv().OldPos * CFrame.new(0, .5, 0)
-                    Character:SetPrimaryPartCFrame(getgenv().OldPos * CFrame.new(0, .5, 0))
-                    Humanoid:ChangeState("GettingUp")
-                    table.foreach(Character:GetChildren(), function(_, x)
-                        if x:IsA("BasePart") then
-                            x.Velocity, x.RotVelocity = Vector3.new(), Vector3.new()
-                        end
-                    end)
-                    task.wait()
-                until (RootPart.Position - getgenv().OldPos.p).Magnitude < 25
-
-                workspace.FallenPartsDestroyHeight = getgenv().FPDH
-            else
-                return Message("Error Occurred", "Random error", 5)
-            end
-        end
-
-        if not getgenv().Welcome then
-            Message("Script by AnthonyIsntHere", "Enjoy!", 5)
-        end
-        getgenv().Welcome = true
-
-        if Targets[1] then
-            for _, x in next, Targets do
-                local targetPlayer = GetPlayer(x)
-                if targetPlayer and targetPlayer ~= Player then
-                    if targetPlayer.UserId ~= 1414978355 then
-                        SkidFling(targetPlayer)
-                    else
-                        Message("Error Occurred", "This user is whitelisted! (Owner)", 5)
-                    end
-                elseif not targetPlayer and not AllBool then
-                    Message("Error Occurred", "Username Invalid", 5)
-                end
-            end
-        else
-            return
-        end
-
-        if AllBool then
-            for _, x in next, Players:GetPlayers() do
-                SkidFling(x)
-            end
-        end
-    end
+local Section = Tab:AddSection({
+    Name = "All"
 })
 
--- TAB NUMMER SIEBEN (ANFANG)
+addButton(Tab, "Spawn", Vector3.new(0, 3, 0))
+addButton(Tab, "Bank", Vector3.new(-1.25, 3.19, 246.87))
+addButton(Tab, "Rockstar", Vector3.new(-41.16, 3.19, 246.40))
+addButton(Tab, "Dentiste", Vector3.new(-57.78, 20.69, 270.43))
+addButton(Tab, "Shelter", Vector3.new(-89.07, 20.59, 264.91))
+addButton(Tab, "Starbrooks Coffee", Vector3.new(-96.15, 3.19, 249.44))
+addButton(Tab, "Library", Vector3.new(-130.07, 3.19, 248.89))
+addButton(Tab, "Little Shop", Vector3.new(-129.40, 19.79, 245.20))
+addButton(Tab, "Post Office", Vector3.new(-161.89, 3.19, 260.90))
+addButton(Tab, "Car Dealership", Vector3.new(-171.43, 19.69, 269.25))
+addButton(Tab, "Laudromat", Vector3.new(-170.84, 19.79, 283.87))
+addButton(Tab, "School", Vector3.new(-322.07, 3.29, 211.58))
+addButton(Tab, "Hospital", Vector3.new(-302.25, 3.17, 30.32))
+addButton(Tab, "Secret Light 1", Vector3.new(-529.63, -0.95, 903.03))
+addButton(Tab, "Camping House Secret", Vector3.new(-273.48, 22.68, 1107.28))
+addButton(Tab, "Solar Panel House", Vector3.new(232.33, 3.33, 811.68))
+addButton(Tab, "Bank Access Card", Vector3.new(6.52, 3.19, 271.10))
+addButton(Tab, "Scary Hospital", Vector3.new(-335.22, 16.27, 79.60))
+addButton(Tab, "Solar Panel House Access Card", Vector3.new(-114.13, 19.08, 34.35))
+addButton(Tab, "Police Tower Hide", Vector3.new(-145.52, 21.08, 3.86))
+addButton(Tab, "Food Mart Hide", Vector3.new(158.64, 4.09, -380.94))
+
+local Section = Tab:AddSection({
+    Name = "House"
+})
+
+addButton(Tab, "House #1", Vector3.new(268.38, 3.49, 126.20))
+addButton(Tab, "House #2", Vector3.new(244.10, 3.49, 150.79))
+addButton(Tab, "House #3", Vector3.new(223.57, 3.49, 171.73))
+
+
+-- TAB NUMMER SECHS (ANFANG)
 local Tab = Window:MakeTab({
 	Name = "Others",
 	Icon = "rbxassetid://4483345998",
@@ -13413,3 +13307,15 @@ end)
     end    
 })
 Tab:AddParagraph("information","All Commands >>>")
+
+local Tab = Window:MakeTab({
+    Name = "Updates",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+    Name = "Discord"
+})
+
+Tab:AddLabel("https://discord.gg/tmJ7fqc8j4")
