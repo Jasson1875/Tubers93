@@ -29,8 +29,6 @@ ownerSection:AddLabel("Tiktok: deakerk18")
 local designerSection = InfoTab:AddSection({ Name = "Designer" })
 designerSection:AddLabel("Designer: Noobie22152")
 
--- Hier kannst du weiterhin Tabs und deren Funktionen hinzufügen
-
 
 -- TAB NUMMER EINS (ANFANG)
 local Tab = Window:MakeTab({
